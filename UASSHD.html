@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hadis Digital - E-Book Bullying dalam Perspektif Hadis</title>
+    
+    <!-- Tailwind CSS v4 CDN -->
+    <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts for Arabic and Latin typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        /* Typography Optimizations */
+        .txt-ayat {
+            font-family: 'Amiri', serif;
+            font-size: 1.75rem; /* text-2xl/3xl */
+            text-align: justify;
+            text-align-last: right;
+            line-height: 2.5;
+            word-spacing: -2px;
+            direction: rtl;
+            color: #1f2937;
+            margin-bottom: 1.5rem;
+        }
+
+        .txt-terjemah {
+            text-align: justify;
+            color: #374151;
+            font-style: italic;
+            hyphens: auto;
+            -webkit-hyphens: auto;
+            -ms-hyphens: auto;
+            line-height: 1.8;
+            font-size: 1.05rem;
+        }
+
+        /* Custom Scrollbar for Sidebar */
+        .sidebar-scroll::-webkit-scrollbar {
+            width: 4px;
+        }
+        .sidebar-scroll::-webkit-scrollbar-thumb {
+            background-color: #064e3b;
+            border-radius: 4px;
+        }
+
+        /* Smooth transition for dropdowns */
+        .dropdown-menu {
+            transition: all 0.3s ease-in-out;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 flex flex-col h-screen overflow-hidden">
+
+    <!-- TOP NAVIGATION BAR (Sticky) -->
+    <header class="bg-emerald-800 text-white shadow-md sticky top-0 z-50 h-16 flex items-center px-4 flex-shrink-0 justify-between">
+        <div class="flex items-center gap-4">
+            <!-- Mobile Toggle Button -->
+            <button onclick="toggleSidebar(event)" class="lg:hidden text-white hover:text-emerald-200 focus:outline-none text-2xl p-2">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+            
+            <!-- Brand Logo -->
+            <div class="flex items-center gap-2 cursor-pointer" onclick="openPage('home')">
+                <div class="w-8 h-8 bg-white text-emerald-800 rounded-lg flex items-center justify-center font-bold">
+                    <i class="fa-solid fa-book-quran"></i>
+                </div>
+                <h1 class="text-xl font-bold tracking-wide hidden sm:block">HADIS DIGITAL</h1>
+            </div>
+        </div>
+        
+        <div class="text-sm font-medium text-emerald-200 hidden md:block">
+            Kajian Nilai-Nilai Islam & Akhlak Mulia
+        </div>
+    </header>
+
+    <div class="flex flex-1 overflow-hidden relative">
+        
+        <!-- SIDEBAR NAVIGATION -->
+        <aside id="sidebar" class="bg-emerald-900 text-white w-72 flex-shrink-0 h-full flex flex-col absolute lg:relative z-40 transform -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out shadow-2xl lg:shadow-none sidebar-scroll overflow-y-auto">
+            
+            <div class="p-6">
+                <p class="text-xs uppercase tracking-wider text-emerald-400 font-bold mb-4">Navigasi Utama</p>
+                <ul class="space-y-2">
+                    
+                    <!-- MENU 1: Home -->
+                    <li>
+                        <button onclick="openPage('home')" class="w-full flex items-center gap-3 px-4 py-3 bg-emerald-800/50 hover:bg-emerald-700 rounded-lg transition-colors text-left font-medium text-emerald-50">
+                            <i class="fa-solid fa-house w-5 text-center"></i> Beranda Utama
+                        </button>
+                    </li>
+
+                    <!-- MENU 2: Daftar Isi (Heading 1) -->
+                    <li class="pt-4 pb-2">
+                        <p class="text-xs uppercase tracking-wider text-emerald-400 font-bold">Materi E-Book</p>
+                    </li>
+
+                    <!-- Bab I -->
+                    <li class="dropdown-container">
+                        <button onclick="toggleDropdown('menu-bab1', event)" class="w-full flex items-center gap-3 px-4 py-3 hover:bg-emerald-800 rounded-lg transition-colors text-left font-medium">
+                            <i class="fa-solid fa-book-open w-5 text-center text-emerald-300"></i>
+                            <span class="flex-1">BAB I: Prinsip Dasar</span>
+                            <i class="fa-solid fa-gem text-[10px] text-emerald-400"></i>
+                        </button>
+                        <ul id="menu-bab1" class="hidden dropdown-menu bg-emerald-950/30 mt-1 rounded-lg overflow-hidden py-2 pl-11 pr-3 space-y-1">
+                            <li><a href="#" onclick="openPage('bab1')" class="block py-2 text-sm text-emerald-200 hover:text-white transition-colors">Larangan Iri Dengki & Hasad</a></li>
+                            <li><a href="#" onclick="openPage('bab1')" class="block py-2 text-sm text-emerald-200 hover:text-white transition-colors">Larangan Menyakiti Sesama</a></li>
+                        </ul>
+                    </li>
+
+                    <!-- Bab II -->
+                    <li class="dropdown-container">
+                        <button onclick="toggleDropdown('menu-bab2', event)" class="w-full flex items-center gap-3 px-4 py-3 hover:bg-emerald-800 rounded-lg transition-colors text-left font-medium">
+                            <i class="fa-solid fa-book-open w-5 text-center text-emerald-300"></i>
+                            <span class="flex-1">BAB II: Etika Komunikasi</span>
+                            <i class="fa-solid fa-gem text-[10px] text-emerald-400"></i>
+                        </button>
+                        <ul id="menu-bab2" class="hidden dropdown-menu bg-emerald-950/30 mt-1 rounded-lg overflow-hidden py-2 pl-11 pr-3 space-y-1">
+                            <li><a href="#" onclick="openPage('bab2')" class="block py-2 text-sm text-emerald-200 hover:text-white transition-colors">Larangan Mencela & Kasar</a></li>
+                            <li><a href="#" onclick="openPage('bab2')" class="block py-2 text-sm text-emerald-200 hover:text-white transition-colors">Perintah Menjaga Lisan</a></li>
+                        </ul>
+                    </li>
+
+                    <!-- Bab III -->
+                    <li class="dropdown-container">
+                        <button onclick="toggleDropdown('menu-bab3', event)" class="w-full flex items-center gap-3 px-4 py-3 hover:bg-emerald-800 rounded-lg transition-colors text-left font-medium">
+                            <i class="fa-solid fa-book-open w-5 text-center text-emerald-300"></i>
+                            <span class="flex-1">BAB III: Bullying Fisik</span>
+                            <i class="fa-solid fa-gem text-[10px] text-emerald-400"></i>
+                        </button>
+                        <ul id="menu-bab3" class="hidden dropdown-menu bg-emerald-950/30 mt-1 rounded-lg overflow-hidden py-2 pl-11 pr-3 space-y-1">
+                            <li><a href="#" onclick="openPage('bab3')" class="block py-2 text-sm text-emerald-200 hover:text-white transition-colors">Larangan Kekerasan Fisik</a></li>
+                            <li><a href="#" onclick="openPage('bab3')" class="block py-2 text-sm text-emerald-200 hover:text-white transition-colors">Manajemen Emosi</a></li>
+                        </ul>
+                    </li>
+
+                    <!-- Bab IV -->
+                    <li class="dropdown-container">
+                        <button onclick="toggleDropdown('menu-bab4', event)" class="w-full flex items-center gap-3 px-4 py-3 hover:bg-emerald-800 rounded-lg transition-colors text-left font-medium">
+                            <i class="fa-solid fa-book-open w-5 text-center text-emerald-300"></i>
+                            <span class="flex-1">BAB IV: Akhlak Positif</span>
+                            <i class="fa-solid fa-gem text-[10px] text-emerald-400"></i>
+                        </button>
+                        <ul id="menu-bab4" class="hidden dropdown-menu bg-emerald-950/30 mt-1 rounded-lg overflow-hidden py-2 pl-11 pr-3 space-y-1">
+                            <li><a href="#" onclick="openPage('bab4')" class="block py-2 text-sm text-emerald-200 hover:text-white transition-colors">Ihsan dan Sikap Lembut</a></li>
+                            <li><a href="#" onclick="openPage('bab4')" class="block py-2 text-sm text-emerald-200 hover:text-white transition-colors">Akhlak Mulia & Keteladanan</a></li>
+                        </ul>
+                    </li>
+
+                    <!-- MENU 4: Penulis -->
+                    <li class="pt-4">
+                        <button onclick="openPage('penulis')" class="w-full flex items-center gap-3 px-4 py-3 hover:bg-emerald-800 rounded-lg transition-colors text-left font-medium">
+                            <i class="fa-solid fa-id-card w-5 text-center text-blue-300"></i>
+                            <span class="flex-1">Profil Penulis</span>
+                        </button>
+                    </li>
+
+                </ul>
+            </div>
+        </aside>
+
+        <!-- Overlay for mobile sidebar -->
+        <div id="sidebar-overlay" onclick="toggleSidebar(event)" class="fixed inset-0 bg-black bg-opacity-50 z-30 hidden lg:hidden"></div>
+
+        <!-- MAIN CONTENT AREA -->
+        <main class="flex-1 overflow-y-auto scroll-smooth relative w-full p-4 md:p-8">
+            
+            <!-- PAGE: HOME -->
+            <div id="page-home" class="page-content h-full flex items-center justify-center">
+                <div class="bg-gradient-to-br from-emerald-700 to-emerald-950 w-full h-full min-h-[70vh] rounded-2xl shadow-xl flex flex-col items-center justify-center text-center p-8 relative overflow-hidden">
+                    <div class="absolute inset-0 opacity-10">
+                        <svg class="w-full h-full" xmlns="http://www.w3.org/2000/svg">
+                            <defs>
+                                <pattern id="islamic-pattern" width="60" height="60" patternUnits="userSpaceOnUse">
+                                    <path d="M30 0 L60 30 L30 60 L0 30 Z" fill="none" stroke="currentColor" stroke-width="1"/>
+                                </pattern>
+                            </defs>
+                            <rect width="100%" height="100%" fill="url(#islamic-pattern)"/>
+                        </svg>
+                    </div>
+                    
+                    <div class="z-10 bg-black/20 p-8 md:p-16 rounded-3xl backdrop-blur-sm border border-emerald-500/30 shadow-2xl max-w-3xl">
+                        <div class="text-emerald-300 mb-6 text-5xl">
+                            <i class="fa-solid fa-book-open-reader"></i>
+                        </div>
+                        <h2 class="text-white text-sm md:text-base tracking-[0.3em] uppercase mb-4 text-emerald-300 font-semibold">E-Book Hadis Tematik</h2>
+                        <h1 class="text-4xl md:text-6xl font-bold text-white mb-6 leading-tight">
+                            Bullying dalam <br>Perspektif Hadis
+                        </h1>
+                        <p class="text-emerald-100 text-lg md:text-xl font-light mb-10 max-w-2xl mx-auto">
+                            Kajian Nilai-Nilai Islam tentang Larangan Menyakiti Sesama dan Akhlak Mulia
+                        </p>
+                        <div class="inline-block border-t border-emerald-500/50 pt-6">
+                            <p class="text-emerald-300 text-sm uppercase tracking-widest mb-1">Disusun & Diedit Oleh</p>
+                            <p class="text-white font-semibold text-lg">Khairul Kahfi & Muhammad Ikhsan Maulana Rohis</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PAGE: BAB 1 -->
+            <div id="page-bab1" class="page-content hidden max-w-4xl mx-auto">
+                <div class="mb-10 text-center">
+                    <span class="text-emerald-600 font-bold tracking-widest uppercase text-sm">Bagian Pertama</span>
+                    <h2 class="text-3xl font-bold text-gray-800 mt-2 border-b-2 border-emerald-500 inline-block pb-2">BAB I: Prinsip Dasar Larangan Bullying dalam Islam</h2>
+                </div>
+
+                <!-- Sub-Bab 1 -->
+                <div class="bg-white p-6 md:p-8 rounded-xl shadow-sm border border-gray-100 mb-8 relative">
+                    <div class="absolute -left-3 top-8 w-6 h-6 bg-emerald-500 rounded-full flex items-center justify-center border-4 border-white">
+                        <i class="fa-solid fa-gem text-[10px] text-white"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-emerald-800 mb-6 pb-2 border-b border-gray-100">Larangan Iri Dengki, Hasad, dan Permusuhan Sosial</h3>
+                    
+                    <p class="text-gray-600 font-semibold mb-4 text-sm uppercase tracking-wide">a. Larangan saling hasad dan menipu (najasy)</p>
+                    <p class="txt-ayat">(٢٥٦٤) حَدَّثَنَا عَبْدُ اللَّهِ بْنُ مَسْلَمَةَ بْنِ قَعْنَبٍ، حَدَّثَنَا دَاوُدُ (يَعْنِي ابْنَ قَيْسٍ) عَنْ أَبِي سَعِيدٍ، مَوْلَى عَامِرِ بْنِ كُرَيْزٍ،:عَنْ أَبِي هُرَيْرَةَ رضي الله عنه. قَالَ: قَالَ رَسُولُ اللَّهِ صَلَّى اللهُ عَلَيْهِ وَسَلَّمَ: لَا تَحَاسَدُوا، وَلَا تَنَاجَشُوا، وَلَا تَبَاغَضُوا، وَلَا تَدَابَرُوا، وَلَا يَبِعْ بَعْضُكُمْ عَلَى بَيْعِ بَعْضٍ. وَكُونُوا، عِبَادَ اللهِ! إِخْوَانًا. الْمُسْلِمُ أَخُو الْمُسْلِمِ، لَا يَظْلِمُهُ، وَلَا يَخْذُلُهُ، وَلَا يَحْقِرُهُ. التَّقْوَى هَهُنَا وَيُشِيرُ إِلَى صَدْرِهِ ثَلَاثَ مَرَّاتٍ بِحَسْبِ امْرِئٍ مِنَ الشَّرِّ أَنْ يَحْقِرَ أَخَاهُ الْمُسْلِمَ كُلُّ الْمُسْلِمِ عَلَى الْمُسْلِمِ حَرَامٌ: دَمُهُ، وَمَالُهُ، وَعِرْضُهُ</p>
+                    <p class="txt-terjemah">Artinya: Abdullah bin Maslamah bin Qa‘nab telah menceritakan kepada kami, ia berkata: Dawud (yaitu Dawud bin Qais) telah menceritakan kepada kami, dari Abu Sa‘id, maula ‘Amir bin Kurayz, dari Abu Hurairah radhiyallahu ‘anhu. Ia berkata: Rasulullah ﷺ bersabda: “Janganlah kalian saling hasad (iri dengki), jangan saling menipu dengan najasy, jangan saling membenci, dan jangan saling membelakangi (memutus hubungan). Janganlah seorang di antara kalian menjual di atas penjualan saudaranya. Jadilah kalian, wahai hamba-hamba Allah, sebagai saudara. Seorang Muslim adalah saudara bagi Muslim lainnya: ia tidak menzhaliminya, tidak menelantarkannya, dan tidak merendahkannya. Takwa itu berada di sini,” (beliau menunjuk ke dadanya tiga kali). “Cukuplah seseorang dianggap berbuat buruk apabila ia merendahkan saudaranya sesama Muslim. Setiap bagian diri seorang Muslim itu haram (harus dijaga dan dihormati): darahnya, hartanya, dan kehormatannya.” (HR. Muslim No. 2564)</p>
+                    
+                    <hr class="my-8 border-gray-200 border-dashed">
+                    
+                    <p class="text-gray-600 font-semibold mb-4 text-sm uppercase tracking-wide">b. Larangan saling membenci antar sesama</p>
+                    <p class="txt-ayat">٦٠٦٥ - حَدَّثَنَا أَبُو الْيَمَانِ : أَخْبَرَنَا شُعَيْبٌ، عَنِ الزُّهْرِيِّ قَالَ: حَدَّثَنِي أَنَسُ بْنُ مَالِكٍ أَنَّ رَسُولَ اللهِ ﷺ قَالَ: لَا تَبَاغَضُوا، وَلَا تَحَاسَدُوا، وَلَا تَدَابَرُوا، وَكُونُوا عِبَادَ اللهِ إِخْوَانًا، وَلَا يَحِلُّ لِمُسْلِمٍ أَنْ يَهْجُرَ أَخَاهُ فَوْقَ ثَلَاثَةِ أَيَّامٍ</p>
+                    <p class="txt-terjemah">Artinya: Abu al-Yamān telah menceritakan kepada kami, Su‘ayb telah mengkhabarkan kepada kami, dari Az Zuhri ia berkata “ Anas bin Malik telah menceritakan kepadaku Bahwa Rasulullah SAW Bersabda: “Janganlah kalian saling membenci, dan jangan saling mendengki, dan jangan saling berpaling (memutus hubungan). Jadilah kalian hamba-hamba Allah yang bersaudara. Dan tidak halal bagi seorang Muslim untuk memboikot (menjauhi) saudaranya lebih dari tiga hari.” (HR. Bukhari No. 6065)</p>
+                </div>
+
+                <!-- Sub-Bab 2 -->
+                <div class="bg-white p-6 md:p-8 rounded-xl shadow-sm border border-gray-100 mb-8 relative">
+                    <div class="absolute -left-3 top-8 w-6 h-6 bg-emerald-500 rounded-full flex items-center justify-center border-4 border-white">
+                        <i class="fa-solid fa-gem text-[10px] text-white"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-emerald-800 mb-6 pb-2 border-b border-gray-100">Larangan Menyakiti Sesama Muslim / Prinsip "tidak boleh membahayakan diri sendiri dan orang lain"</h3>
+                    
+                    <p class="txt-ayat">٢٣٤٠ - حَدَّثَنَا عَبْدُ رَبِّهِ بْنُ خَالِدٍ النُّمَيْرِيُّ أَبُو الْمُغَلِّسِ، حَدَّثَنَا فُضَيْلُ بْنُ سُلَيْمَانَ، حَدَّثَنَا مُوسَى بْنُ عُقْبَةَ، حَدَّثَنَا إِسْحَاق بْنُ يَحْيَى بْنِ الْوَلِيدِ عَنْ عُبَادَةَ بْنِ الصَّامِتِ: أَنَّ رَسُولَ اللَّهِ - صَلَّى اللَّهُ عَلَيْهِ وَسَلَّمَ - قَضَى أَنْ لَا ضَرَرَ وَلَا ضِرَارَ</p>
+                    <p class="txt-terjemah">Artinya: Abd Rabbih bin Khālid an-Numayrī(Abū al-Mughallis) telah menceritakan kepada kami, Fuḍayl bin Sulaymān telah menceritakan kepada kami, Mūsā bin ‘Uqbah telah menceritakan kepada kami, Isḥāq bin Yaḥyā bin al-Walīd telah menceritakan kepada kami dari ‘Ubādah bin aṣ-Ṣāmit Bahwa Rasulullah ﷺ telah menetapkan (memutuskan hukum): “Tidak boleh melakukan perbuatan yang menimbulkan bahaya, dan tidak boleh membalas bahaya dengan bahaya.” (HR. Ibn Mājah no. 2340)</p>
+                </div>
+            </div>
+
+            <!-- PAGE: BAB 2 -->
+            <div id="page-bab2" class="page-content hidden max-w-4xl mx-auto">
+                <div class="mb-10 text-center">
+                    <span class="text-emerald-600 font-bold tracking-widest uppercase text-sm">Bagian Kedua</span>
+                    <h2 class="text-3xl font-bold text-gray-800 mt-2 border-b-2 border-emerald-500 inline-block pb-2">BAB II: Bullying Verbal dan Etika Komunikasi dalam Hadis</h2>
+                </div>
+
+                <div class="bg-white p-6 md:p-8 rounded-xl shadow-sm border border-gray-100 mb-8 relative">
+                    <div class="absolute -left-3 top-8 w-6 h-6 bg-emerald-500 rounded-full flex items-center justify-center border-4 border-white">
+                        <i class="fa-solid fa-gem text-[10px] text-white"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-emerald-800 mb-6 pb-2 border-b border-gray-100">Larangan Mencela, Melaknat, dan Berkata Kasar</h3>
+                    
+                    <p class="text-gray-600 font-semibold mb-4 text-sm uppercase tracking-wide">Mukmin bukan orang yang suka mencela dan melaknat</p>
+                    <p class="txt-ayat">١٩٧٧ - حَدَّثَنَا مُحَمَّدُ بْنُ يَحْيَى الْأَزْدِيُّ الْبَصْرِيُّ، قَالَ: حَدَّثَنَا مُحَمَّدُ بْنُ سَابِقٍ ، عَنْ إِسْرَائِيلَ ، عَنِ الْأَعْمَشِ ، عَنْ إِبْرَاهِيمَ عَنْ عَلْقَمَةَ ، عَنْ عَبْدِ اللهِ قَالَ: قَالَ رَسُولُ اللهِ صَلَّى اللهُ عَلَيْهِ وَسَلَّمَ: «لَيْسَ الْمُؤْمِنُ بِالطَّعَّانِ»، وَلَا اللَّعَّانِ، وَلَا الْفَاحِشِ، وَلَا الْبَذِيءِ هَذَا حَدِيثٌ حَسَنٌ غَرِيبٌ. وَقَدْ رُوِيَ عَنْ عَبْدِ اللهِ مِنْ غَيْرِ هَذَا الْوَجْهِ</p>
+                    <p class="txt-terjemah">Artinya: Muhammad bin Yahyā al-Azdī al-Bashrī telah menceritakan kepada kami. Ia berkata: Muhammad bin Sābiq telah menceritakan kepada kami, dari Isrā’īl, dari al-A‘mash, dari Ibrāhīm, dari ‘Alqamah, dari ‘Abdullāh (yaitu Abdullah bin Mas‘ūd). Ia berkata: Rasulullah ﷺ bersabda: ”Seorang mukmin bukanlah orang yang suka mencela, bukan (pula) orang yang suka melaknat, dan bukan orang yang berkata keji serta kotor.” Kemudian Tirmidzi berkata: ”Hadis ini hasan gharib. Telah diriwayatkan dari Abdullah melalui jalur selain ini juga.” (HR. Tirmidzi No. 1977)</p>
+                    
+                    <hr class="my-8 border-gray-200 border-dashed">
+                    
+                    <p class="text-gray-600 font-semibold mb-4 text-sm uppercase tracking-wide">Mencaci seorang Muslim termasuk kefasikan</p>
+                    <p class="txt-ayat">٧٠٧٦ - حَدَّثَنَا عُمَرُ بْنُ حَفْصٍ، حَدَّثَنِي أَبِي، حَدَّثَا الْأَعْمَشُ، حَدَّثَنَا شَقِيقٌ قَالَ: قَالَ عَبْدُ اللهِ : قَالَ النَّبِيُّ ﷺ: سِبَابُ الْمُسْلِمِ فُسُوقٌ، وَقِتَالُهُ كُفْرٌ.</p>
+                    <p class="txt-terjemah">Artinya: Umar bin Hafsh telah menceritakan kepada kami, ia berkata: ayahku (Hafsh) telah menceritakan kepadaku, ia berkata: al-A‘mash telah menceritakan kepada kami, ia berkata: telah menceritakan kepada kami Syaqīq. Syaqiq berkata: Abdullah (yaitu Abdullah bin Mas‘ūd) berkata: Nabi ﷺ bersabda: “Mencaci seorang Muslim adalah kefasikan, dan memeranginya adalah kekufuran.” (HR. Bukhari No. 7076)</p>
+                </div>
+
+                <div class="bg-white p-6 md:p-8 rounded-xl shadow-sm border border-gray-100 mb-8 relative">
+                    <div class="absolute -left-3 top-8 w-6 h-6 bg-emerald-500 rounded-full flex items-center justify-center border-4 border-white">
+                        <i class="fa-solid fa-gem text-[10px] text-white"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-emerald-800 mb-6 pb-2 border-b border-gray-100">Perintah Menjaga Lisan (Berkata baik atau diam)</h3>
+                    
+                    <p class="txt-ayat">٦١٣٦ - حَدَّثَنَا عَبْدُ اللهِ بْنُ مُحَمَّدٍ: حَدَّثَنَا ابْنُ مَهْدِيٍّ: حَدَّثَنَا سُفْيَانُ، عَنْ أَبِي حَصِينٍ، عَنْ أَبِي صَالِحٍ، عَنْ أَبِي هُرَيْرَةَ عَنِ النَّبِيِّ ﷺ قَالَ: مَنْ كَانَ يُؤْمِنُ بِاللهِ وَالْيَوْمِ الْآخِرِ فَلَا يُؤْذِ جَارَهُ، وَمَنْ كَانَ يُؤْمِنُ بِاللهِ وَالْيَوْمِ الْآخِرِ فَلْيُكْرِمْ ضَيْفَهُ، وَمَنْ كَانَ يُؤْمِنُ بِاللهِ وَالْيَوْمِ الْآخِرِ فَلْيَقُلْ خَيْرًا أَوْ لِيَصْمُتْ</p>
+                    <p class="txt-terjemah">Artinya: ʿAbdullāh ibn Muḥammad telah menceritakan kepada kami, Ibn Mahdī telah menceritakan kepada kami, Sufyan telah menceritakan kepada kami dari Abi Hushayn dari Abi Shalih dari Abi Hurairah dari Nabi SAW, beliau Bersabda: “Barang siapa beriman kepada Allah dan hari akhir, maka janganlah ia menyakiti tetangganya. Barang siapa beriman kepada Allah dan hari akhir, maka hendaklah ia memuliakan tamunya. Barang siapa beriman kepada Allah dan hari akhir, maka hendaklah ia berkata baik atau diam.” (HR. Bukhari No. 6136)</p>
+                </div>
+
+                <div class="bg-white p-6 md:p-8 rounded-xl shadow-sm border border-gray-100 mb-8 relative">
+                    <div class="absolute -left-3 top-8 w-6 h-6 bg-emerald-500 rounded-full flex items-center justify-center border-4 border-white">
+                        <i class="fa-solid fa-gem text-[10px] text-white"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-emerald-800 mb-6 pb-2 border-b border-gray-100">Menjaga lisan sebagai jaminan keselamatan akhirat</h3>
+                    
+                    <p class="txt-ayat">٦٤٧٤ - حَدَّثَنَا مُحَمَّدُ بْنُ أَبِي بَكْرٍ الْمُقَدَّمِيُّ: حَدَّثَنَا عُمَرُ بْنُ عَلِيٍّ سَمِعَ أَبَا حَازِمٍ، عَنْ سَهْلِ بْنِ سَعْدٍ عَنْ رَسُولِ اللهِ ﷺ قَالَ مَنْ يَضْمَنْ لِي مَا بَيْنَ لَحْيَيْهِ وَمَا بَيْنَ رِجْلَيْهِ، أَضْمَنْ لَهُ الْجَنَّةَ</p>
+                    <p class="txt-terjemah">Artinya: Muḥammad bin Abu Bakr al-Muqaddamī telah menceritakan kepada kami, Umar bin ‘Ali telah menceritakan kepada kami, Abu Ḥāzim telah mendengar dari Sahl bin Sa’ad dari Rasulullah SAW bersabda: “Barang siapa menjamin kepadaku (menjaga) apa yang berada di antara dua rahangnya (lisannya) dan apa yang berada di antara dua kakinya (kemaluannya), maka aku menjamin baginya surga.” (HR. Bukhari No. 6474)</p>
+                </div>
+            </div>
+
+            <!-- PAGE: BAB 3 -->
+            <div id="page-bab3" class="page-content hidden max-w-4xl mx-auto">
+                <div class="mb-10 text-center">
+                    <span class="text-emerald-600 font-bold tracking-widest uppercase text-sm">Bagian Ketiga</span>
+                    <h2 class="text-3xl font-bold text-gray-800 mt-2 border-b-2 border-emerald-500 inline-block pb-2">BAB III: Bullying Fisik dan Pengendalian Perilaku</h2>
+                </div>
+
+                <div class="bg-white p-6 md:p-8 rounded-xl shadow-sm border border-gray-100 mb-8 relative">
+                    <div class="absolute -left-3 top-8 w-6 h-6 bg-emerald-500 rounded-full flex items-center justify-center border-4 border-white">
+                        <i class="fa-solid fa-gem text-[10px] text-white"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-emerald-800 mb-6 pb-2 border-b border-gray-100">Larangan Kekerasan Fisik</h3>
+                    
+                    <p class="text-gray-600 font-semibold mb-4 text-sm uppercase tracking-wide">Larangan memukul wajah dalam konflik</p>
+                    <p class="txt-ayat">٢٦١٢- حَدَّثَنَا مُحَمَّدُ بْنُ الْمُثَنَّى. حَدَّثَنِي عَبْدُ الصَّمَدِ. حدثنا همام. حدثنا قتادة عن يحيى بن مالك المراغي وهو أبو أيوب، عن أبي هريرة؛ أن رسول الله صلى الله عليه وسلم قال إِذَا قَاتَلَ أَحَدُكُمْ أَخَاهُ، فَلْيَتَجَنَّبِ الْوَجْهَ.</p>
+                    <p class="txt-terjemah">Artinya: Muḥammad ibn al-Muthannā telah menceritakan kepada kami, Abdus Shamad telah menceritakan kepada kami, Hammam telah menceritakan kepada kami, Qatadah telah menceritakan kepada kami dari Yahya bin Malik Al Maraghi (Abu Ayyub) dari Abi Hurairah asulullah ﷺ bersabda: “Apabila salah seorang dari kalian berkelahi (memukul) saudaranya, maka hendaklah ia menghindari (memukul) wajah.” (HR. Muslim No. 2612)</p>
+                    
+                    <hr class="my-8 border-gray-200 border-dashed">
+                    
+                    <p class="text-gray-600 font-semibold mb-4 text-sm uppercase tracking-wide">Muslim sejati adalah yang orang lain selamat dari lisan dan tangannya</p>
+                    <p class="txt-ayat">١٠ - حَدَّثَنَا آدَمُ بْنُ أَبِي إِيَاسٍ ، قَالَ: حَدَّثَنَا شُعْبَةُ، عَنْ عَبْدِ اللهِ بْنِ أَبِي السَّفَرِ وَإِسْمَاعِيلَ ، عَنِ الشَّعْبِيِّ، عَنْ عَبْدِ اللهِ بْنِ عَمْرٍو عَنِ النَّبِيِّ ﷺ، قَالَ: الْمُسْلِمُ مَنْ سَلِمَ الْمُسْلِمُونَ مِنْ لِسَانِهِ وَيَدِهِ، وَالْمُهَاجِرُ مَنْ هَجَرَ مَا نَهَى اللهُ عَنْهُ قَالَ أَبُو عَبْدِ اللهِ: وَقَالَ أَبُو مُعَاوِيَةَ: حَدَّثَنَا دَاوُدُ عَنْ عَامِرٍ قَالَ: سَمِعْتُ عَبْدَ اللهِ، عَنِ النَّبِيِّ ﷺ. وَقَالَ عَبْدُ الْأَعْلَى: عَنْ دَاوُدَ عَنْ عَامِرٍ عَنْ عَبْدِ اللهِ عَنِ النَّبِيِّ ﷺ.</p>
+                    <p class="txt-terjemah">Artinya: Ādam bin Abī Iyās telah menceritakan kepada kami, ia berkata Shu‘bah telah menceritakan kepada kami dari ‘Abdullāh bin Abī as-Safar dari Isma’il dari al-Sha‘bī dari ‘Abdullāh bin ‘Amr dari Nabi SAW beliau bersabda: “Seorang Muslim adalah orang yang kaum Muslimin selamat dari gangguan lisan dan tangannya. Dan seorang Muhajir adalah orang yang meninggalkan segala sesuatu yang dilarang oleh Allah.” Abu ‘Abdillah berkata: Dan Abu Mu‘awiyah berkata: telah menceritakan kepada kami Dawud dari ‘Āmir, ia berkata: Aku mendengar ‘Abdullah dari Nabi ﷺ. Dan ‘Abdul A‘lā berkata: dari Dawud, dari ‘Āmir, dari ‘Abdullah, dari Nabi ﷺ. (HR. al-Bukhārī no. 10)</p>
+                </div>
+
+                <div class="bg-white p-6 md:p-8 rounded-xl shadow-sm border border-gray-100 mb-8 relative">
+                    <div class="absolute -left-3 top-8 w-6 h-6 bg-emerald-500 rounded-full flex items-center justify-center border-4 border-white">
+                        <i class="fa-solid fa-gem text-[10px] text-white"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-emerald-800 mb-6 pb-2 border-b border-gray-100">Pengendalian Amarah dan Manajemen Emosi</h3>
+                    
+                    <p class="text-gray-600 font-semibold mb-4 text-sm uppercase tracking-wide">Kekuatan sejati adalah mampu menahan amarah</p>
+                    <p class="txt-ayat">٦١١٤ - حَدَّثَنَا عَبْدُ اللهِ بْنُ يُوسُفَ: أَخْبَرَنَا مَالِكٌ، عَنِ ابْنِ شِهَابٍ، عَنْ سَعِيدِ بْنِ الْمُسَيَّبِ، عَنْ أَبِي هُرَيْرَةَ أَنَّ رَسُولَ اللهِ ﷺ قَالَ: لَيْسَ الشَّدِيدُ بِالصُّرَعَةِ، إِنَّمَا الشَّدِيدُ الَّذِي يَمْلِكُ نَفْسَهُ عِنْدَ الْغَضَبِ</p>
+                    <p class="txt-terjemah">Artinya: Abdullāh ibn Yūsuf telah menceritakan kepada kami, Malik telah mengkhabarkan kepada kami dari ibn shihab dari Sa’id bin Al Musayyab dari Abi Hurairah bahwa Rasulullah ﷺ bersabda: “Orang yang kuat bukanlah yang pandai menjatuhkan lawan dalam gulat, tetapi orang yang benar-benar kuat adalah yang mampu menahan dirinya saat marah.” (HR. Bukhari No. 6114)</p>
+                </div>
+            </div>
+
+            <!-- PAGE: BAB 4 -->
+            <div id="page-bab4" class="page-content hidden max-w-4xl mx-auto">
+                <div class="mb-10 text-center">
+                    <span class="text-emerald-600 font-bold tracking-widest uppercase text-sm">Bagian Keempat</span>
+                    <h2 class="text-3xl font-bold text-gray-800 mt-2 border-b-2 border-emerald-500 inline-block pb-2">BAB IV: Nilai Akhlak Positif sebagai Pencegahan Bullying</h2>
+                </div>
+
+                <div class="bg-white p-6 md:p-8 rounded-xl shadow-sm border border-gray-100 mb-8 relative">
+                    <div class="absolute -left-3 top-8 w-6 h-6 bg-emerald-500 rounded-full flex items-center justify-center border-4 border-white">
+                        <i class="fa-solid fa-gem text-[10px] text-white"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-emerald-800 mb-6 pb-2 border-b border-gray-100">Ihsan dan Sikap Lembut dalam Interaksi Sosial</h3>
+                    
+                    <p class="text-gray-600 font-semibold mb-4 text-sm uppercase tracking-wide">a. Kewajiban berbuat ihsan dalam segala hal</p>
+                    <p class="txt-ayat">١٩٥٥- حدثنا أبو بكر بن أبي شيبة. حدثنا إسماعيل بن عُلَيَّةَ عَنْ خَالِدٍ الْحَذَّاءِ، عَنْ أَبِي قِلَابَةَ، عَنْ أَبِي الْأَشْعَثِ، عَنْ شَدَّادِ بْنِ أَوْسٍ قَالَ ثِنْتَانِ حَفِظْتُهُمَا عَنْ رَسُولِ اللَّهِ صَلَّى اللَّهُ عَلَيْهِ وَسَلَّمَ. قَالَ إِنَّ اللَّهَ كَتَبَ الْإِحْسَانَ عَلَى كُلِّ شَيْءٍ. فَإِذَا قَتَلْتُمْ فَأَحْسِنُوا الْقِتْلَةَ وَإِذَا ذَبَحْتُمْ فَأَحْسِنُوا الذَّبْحَ. وَلْيُحِدَّ أَحَدُكُمْ شفرته. فليرح ذبيحته</p>
+                    <p class="txt-terjemah">Artinya: Abu Bakar putra Abu Syaibah telah menceritakan kepada kami, Ismail bin ‘Ulayyah telah menceritakan kepada kami dari Khālid Al hazza (si Pembuat Sepatu) dari Abu Qilābah dari Abu al-Asy‘ats dari Syaddad putra Aws, ia berkata: ““Dua hal yang aku hafal dari Rasulullah ﷺ. Beliau bersabda: “Sesungguhnya Allah telah mewajibkan berbuat ihsan (kebaikan) atas segala sesuatu. Jika kalian membunuh (dalam konteks yang dibenarkan), maka lakukanlah dengan cara yang baik. Dan jika kalian menyembelih hewan, maka sembelihlah dengan cara yang baik. Hendaklah salah seorang di antara kalian menajamkan pisaunya dan memberikan kenyamanan kepada hewan sembelihannya.” (HR. Muslim No. 1955)</p>
+
+                    <hr class="my-8 border-gray-200 border-dashed">
+
+                    <p class="text-gray-600 font-semibold mb-4 text-sm uppercase tracking-wide">Hilangnya kelembutan menyebabkan hilangnya kebaikan</p>
+                    <p class="txt-ayat">٢٥٩٢- حَدَّثَنَا يَحْيَى بْنُ يَحْيَى. أَخْبَرَنَا عَبْدُ الْوَاحِدِ بن زياد عن محمد بن أبي إسماعيل، عن عبد الرحمن بن هلال. قال سمعت جرير بْنَ عَبْدِ اللَّهِ يَقُولُ: قَالَ رَسُولُ اللَّهِ صلى الله عليه وسلم "مَنْ حُرِمَ الرِّفْقَ، حُرِمَ الْخَيْرَ. أَوْ مَنْ يُحْرَمِ الرِّفْقَ يُحْرَمِ الْخَيْرَ</p>
+                    <p class="txt-terjemah">Artinya: Yahya bin Yahya telah menceritakan kepada kami, Abdul-Wāḥid bin Ziyād telah mengkhabarkan kepada kami dari Muhammad bin Abi Ismail, dari Abdurrahman bin Hilal ia berkata: Aku mendengar dari Jarir bin Abdillah berkata: “Rasulullah ﷺ telah bersabda: “Barang siapa dihalangi dari sifat lembut, maka ia terhalangi dari kebaikan. Atau: barang siapa tidak mendapatkan kelembutan, ia tidak akan mendapatkan kebaikan.” (HR. Muslim No. 2592)</p>
+                    
+                    <hr class="my-8 border-gray-200 border-dashed">
+
+                    <p class="text-gray-600 font-semibold mb-4 text-sm uppercase tracking-wide">Senyum sebagai bentuk sedekah dan interaksi positif</p>
+                    <p class="txt-ayat">١٩٥٦ - حَدَّثَنَا عَبَّاسُ بْنُ عَبْدِ الْعَظِيمِ الْعَنْبَرِيُّ، قَالَ: حَدَّثَنَا النَّضْرُ بْنُ مُحَمَّدٍ الْجُرَشِيُّ الْيَمَامِيُّ، قَالَ: حَدَّثَنَا عِكْرِمَةُ بْنُ عَمَّارٍ، قَالَ: حَدَّثَنَا أَبُو زُمَيْلٍ ، عَنْ مَالِكِ بْنِ مَرْثَدٍ ، عَنْ أَبِيهِ ، عَنْ أَبِي ذَرٍّ قَالَ: قَالَ رَسُولُ اللهِ صَلَّى اللهُ عَلَيْهِ وَسَلَّمَ: «تَبَسُّمُكَ فِي وَجْهِ أَخِيكَ لَكَ صَدَقَةٌ،» وَأَمْرُكَ بِالْمَعْرُوفِ وَنَهْيُكَ عَنِ الْمُنْكَرِ صَدَقَةٌ، وَإِرْشَادُكَ الرَّجُلَ فِي أَرْضِ الضَّلَالِ لَكَ صَدَقَةٌ، وَبَصَرُكَ لِلرَّجُلِ الرَّدِيءِ الْبَصَرِ لَكَ صَدَقَةٌ، وَإِمَاطَتُكَ الْحَجَرَ وَالشَّوْكَةَ وَالْعَظْمَ عَنِ الطَّرِيقِ لَكَ صَدَقَةٌ، وَإِفْرَاغُكَ مِنْ دَلْوِكَ فِي دَلْوِ أَخِيكَ لَكَ صَدَقَةٌ</p>
+                    <p class="txt-terjemah">Artinya: Abbas bin ‘Abd al-‘Azim al-‘Anbari telah menceritakan kepada kami ia berkata, An-Nadhr bin Muhammad al-Jurasyi al-Yamami telah menceritakan kepada kami, ‘Ikrimah bin ‘Ammar telah menceritakan kepada kami, Abu Zumail telah menceritakan kepada kami dari Malik bin Mirtad dari Ayahnya dari Abu Zar ia berkata: Rasulullah SAW bersabda: “Senyummu di hadapan saudaramu adalah sedekah bagimu. Perintahmu kepada kebaikan dan laranganmu dari kemungkaran adalah sedekah. Petunjukmu kepada seseorang yang tersesat di suatu tempat adalah sedekah. Penglihatanmu (pertolonganmu) bagi seseorang yang lemah penglihatannya adalah sedekah. Membersihkan batu, duri, dan tulang dari jalan adalah sedekah bagimu. Dan menumpahkan air dari embermu ke dalam ember saudaramu adalah sedekah bagimu.” (HR. Tirmidzi No. 1956).</p>
+                </div>
+
+                <div class="bg-white p-6 md:p-8 rounded-xl shadow-sm border border-gray-100 mb-8 relative">
+                    <div class="absolute -left-3 top-8 w-6 h-6 bg-emerald-500 rounded-full flex items-center justify-center border-4 border-white">
+                        <i class="fa-solid fa-gem text-[10px] text-white"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-emerald-800 mb-6 pb-2 border-b border-gray-100">Akhlak Mulia dan Keteladanan Moral</h3>
+                    
+                    <p class="text-gray-600 font-semibold mb-4 text-sm uppercase tracking-wide">Orang terbaik adalah yang paling baik akhlaknya</p>
+                    <p class="txt-ayat">٣٥٥٩ - حَدَّثَنَا عَبْدَانُ عَنْ أَبِي حَمْزَةَ عَنِ الْأَعْمَشِ عَنْ أَبِي وَائِلٍ عَنْ مَسْرُوقٍ عَنْ عَبْدِ اللهِ بْنِ عَمْرٍو قَالَ لَمْ يَكُنِ النَّبِيُّ ﷺ فَاحِشًا وَلَا مُتَفَحِّشًا وَكَانَ يَقُولُ إِنَّ مِنْ خِيَارِكُمْ أَحْسَنَكُمْ أَخْلَاقًا</p>
+                    <p class="txt-terjemah">Artinya: ʿAbdān telah menceritakan kepada kami dari Abu Hamzah dari Al-Aʿmash dari Abū Wā’il dari Masrūq dari ʿAbdullāh ibn ʿAmr, ia berkata: “Nabi ﷺ tidak pernah bersikap keji dan tidak pula berbicara keji. Beliau selalu berkata: Sesungguhnya di antara kalian yang terbaik adalah yang paling baik akhlaknya.” (HR. Bukhari No. 3559)</p>
+                    
+                    <hr class="my-8 border-gray-200 border-dashed">
+
+                    <p class="text-gray-600 font-semibold mb-4 text-sm uppercase tracking-wide">Perumpamaan kaum mukmin seperti satu tubuh</p>
+                    <p class="txt-ayat">٦٠١١ - حَدَّثَنَا أَبُو نُعَيْمٍ: حَدَّثَنَا زَكَرِيَّاءُ، عَنْ عَامِرٍ قَالَ: سَمِعْتُهُ يَقُولُ: سَمِعْتُ النُّعْمَانَ بْنَ بَشِيرٍ يَقُولُ: قَالَ رَسُولُ اللهِ ﷺ: تَرَى الْمُؤْمِنِينَ فِي تَرَاحُمِهِمْ وَتَوَادِّهِمْ وَتَعَاطُفِهِمْ كَمَثَلِ الْجَسَدِ إِذَا اشْتَكَى عُضْوًا تَدَاعَى لَهُ سَائِرُ جَسَدِهِ بِالسَّهَرِ وَالْحُمَّى</p>
+                    <p class="txt-terjemah">Artinya: Abū Nu‘aym telah menceritakan kepada kami, Zakariyyā’ telah menceritakan kepada kami dari Amir ia berkata: aku mendengar zakariyya berkata: Aku mendengar dari an-Nu‘mān ibn Bashīr bahwa Rasulullah ﷺ bersabda: “Engkau akan melihat orang-orang beriman dalam hal saling menyayangi, saling mencintai, dan saling berempati, bagaikan satu tubuh; apabila satu anggota tubuh merasa sakit, maka seluruh tubuh turut merasakannya dengan tidak bisa tidur dan demam.” (HR. al-Bukhārī no. 6011)</p>
+                </div>
+            </div>
+
+            <!-- PAGE: PROFIL PENULIS -->
+            <div id="page-penulis" class="page-content hidden max-w-3xl mx-auto py-10">
+                <div class="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100">
+                    <div class="h-32 bg-emerald-800 relative"></div>
+                    <div class="px-8 pb-8 flex flex-col items-center relative -mt-16">
+                        <div class="w-32 h-32 bg-white rounded-full p-2 shadow-lg mb-4">
+                            <div class="w-full h-full bg-emerald-100 rounded-full flex items-center justify-center text-4xl font-bold text-emerald-700">
+                                MI
+                            </div>
+                        </div>
+                        <h2 class="text-3xl font-bold text-gray-800 text-center">Muhammad Ikhsan Maulana Rohis</h2>
+                        <p class="text-emerald-600 font-medium mb-6 mt-1 text-center">Pengembang Digitalisasi Hadis</p>
+                        
+                        <div class="w-full grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+                            <div class="bg-gray-50 p-6 rounded-xl border border-gray-100">
+                                <h4 class="text-sm font-bold text-gray-400 uppercase tracking-wider mb-3"><i class="fa-solid fa-user-graduate mr-2 text-emerald-500"></i> Akademik</h4>
+                                <p class="text-gray-700 leading-relaxed text-sm">
+                                    Mahasiswa Aktif UIN Sultan Maulana Hasanuddin Banten<br>
+                                    Fakultas Ushuluddin dan Adab<br>
+                                    Prodi Ilmu Hadist.
+                                </p>
+                            </div>
+                            
+                            <div class="bg-gray-50 p-6 rounded-xl border border-gray-100">
+                                <h4 class="text-sm font-bold text-gray-400 uppercase tracking-wider mb-3"><i class="fa-solid fa-location-dot mr-2 text-emerald-500"></i> Biodata</h4>
+                                <p class="text-gray-700 leading-relaxed text-sm">
+                                    <strong>Lahir:</strong> Pandeglang, 20 Januari 2007<br>
+                                    <strong>Domisili:</strong> PERUM. PURI CEMPAKA BLOK C5/30, Kel. Teritih, Kec. Walantaka.
+                                </p>
+                            </div>
+
+                            <div class="bg-gray-50 p-6 rounded-xl border border-gray-100 md:col-span-2">
+                                <h4 class="text-sm font-bold text-gray-400 uppercase tracking-wider mb-3"><i class="fa-solid fa-timeline mr-2 text-emerald-500"></i> Riwayat Pendidikan</h4>
+                                <ul class="text-sm text-gray-700 space-y-2 list-disc list-inside">
+                                    <li>SDN Kalang Anyar 1, Labuan (2013-2018)</li>
+                                    <li>Mts. Ponpes Kun Karima Latansa 3 (2019-2022)</li>
+                                    <li>Ma. Ponpes Kun Karima Latansa 3 (2022-2025)</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="flex gap-4 mt-8">
+                            <a href="#" class="w-10 h-10 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center hover:bg-emerald-600 hover:text-white transition-colors"><i class="fa-brands fa-whatsapp"></i></a>
+                            <a href="#" class="w-10 h-10 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center hover:bg-emerald-600 hover:text-white transition-colors"><i class="fa-brands fa-instagram"></i></a>
+                            <a href="#" class="w-10 h-10 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center hover:bg-emerald-600 hover:text-white transition-colors"><i class="fa-solid fa-envelope"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- Application Script Logic -->
+    <script>
+        // Sidebar Toggle for Mobile
+        function toggleSidebar(event) {
+            if(event) event.stopPropagation();
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebar-overlay');
+            
+            sidebar.classList.toggle('-translate-x-full');
+            overlay.classList.toggle('hidden');
+        }
+
+        // SPA Navigation Logic
+        function openPage(pageId) {
+            // Hide all pages
+            const pages = document.querySelectorAll('.page-content');
+            pages.forEach(page => page.classList.add('hidden'));
+
+            // Show target page
+            const targetPage = document.getElementById('page-' + pageId);
+            if(targetPage) {
+                targetPage.classList.remove('hidden');
+            }
+
+            // Auto close mobile sidebar
+            if (window.innerWidth < 1024) { // lg breakpoint in tailwind
+                const sidebar = document.getElementById('sidebar');
+                if(!sidebar.classList.contains('-translate-x-full')) {
+                    toggleSidebar();
+                }
+            }
+
+            // Scroll to top
+            document.querySelector('main').scrollTo(0,0);
+        }
+
+        // Dropdown Toggle Logic (Click Based)
+        function toggleDropdown(menuId, event) {
+            event.preventDefault();
+            event.stopPropagation();
+            
+            const targetMenu = document.getElementById(menuId);
+            const isHidden = targetMenu.classList.contains('hidden');
+            
+            // Close all other dropdowns
+            const allDropdowns = document.querySelectorAll('.dropdown-menu');
+            allDropdowns.forEach(menu => {
+                if(menu.id !== menuId) {
+                    menu.classList.add('hidden');
+                    // Reset icon rotation if added previously
+                    let icon = menu.previousElementSibling.querySelector('.fa-gem');
+                    if(icon) icon.style.transform = 'rotate(0deg)';
+                }
+            });
+
+            // Toggle target dropdown
+            if(isHidden) {
+                targetMenu.classList.remove('hidden');
+                event.currentTarget.querySelector('.fa-gem').style.transform = 'rotate(90deg)';
+            } else {
+                targetMenu.classList.add('hidden');
+                event.currentTarget.querySelector('.fa-gem').style.transform = 'rotate(0deg)';
+            }
+        }
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(event) {
+            const isDropdownClick = event.target.closest('.dropdown-container');
+            const isSidebarClick = event.target.closest('#sidebar');
+            const isMobileBtn = event.target.closest('button[onclick="toggleSidebar(event)"]');
+
+            if (!isDropdownClick) {
+                const allDropdowns = document.querySelectorAll('.dropdown-menu');
+                allDropdowns.forEach(menu => {
+                    menu.classList.add('hidden');
+                    let icon = menu.previousElementSibling.querySelector('.fa-gem');
+                    if(icon) icon.style.transform = 'rotate(0deg)';
+                });
+            }
+        });
+
+        // Initialize Home on load
+        window.onload = () => {
+            openPage('home');
+        };
+    </script>
+</body>
+</html>
